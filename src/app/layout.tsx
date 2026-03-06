@@ -31,7 +31,7 @@ const jsonLd = {
   "@type": "RealEstateAgent",
   name: "INMOBANCA — Residencial Diamant Blue",
   description: "12 apartamentos exclusivos en el Apartahotel Diamant Blue, Cabo Roig, Orihuela Costa.",
-  url: "https://diamantblue-caboroig.vercel.app",
+  url: "https://cabo-roig.vercel.app",
   telephone: ["+34620300647", "+34662600893"],
   email: "inmobancamurcia@gmail.com",
   address: {
@@ -64,7 +64,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <head>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◇</text></svg>" />
+        {/* PWA — "Diamant" app */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#c9a96e" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Diamant" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/diamant-192.png" />
+        <link rel="icon" href="/icons/diamant.svg" type="image/svg+xml" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="antialiased">
