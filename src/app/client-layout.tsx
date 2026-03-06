@@ -29,7 +29,7 @@ function Navigation() {
           <div className="flex items-center gap-4 md:gap-8">
             <div className="hidden md:flex items-center gap-8">
               <a href="/" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">Inicio</a>
-              <a href="/#apartamentos" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
+              <a href="/apartamentos" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
               <a href="/#ubicacion" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
               <a href="/#contacto" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
             </div>
@@ -75,7 +75,7 @@ function Navigation() {
         <div className="md:hidden border-t border-white/5" style={{ background: 'rgba(10,10,10,0.95)' }}>
           <div className="px-6 py-6 flex flex-col gap-4">
             <a href="/" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">Inicio</a>
-            <a href="/#apartamentos" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
+            <a href="/apartamentos" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
             <a href="/#ubicacion" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
             <a href="/#contacto" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
             <Link href="/reservar" onClick={() => setMenuOpen(false)} className="btn-gold text-xs text-center mt-2">{t.nav_reserve}</Link>

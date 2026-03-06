@@ -117,8 +117,6 @@ const heroSlides = [
    ══════════════════════════════════════════════════════════════ */
 export default function Home() {
   const { t } = useI18n()
-  const floor3 = apartments.filter(a => a.floor === 3)
-  const floor4 = apartments.filter(a => a.floor === 4)
   const avgPrice = Math.round(apartments.reduce((s, a) => s + a.price, 0) / apartments.length)
   const available = apartments.filter(a => a.status === 'available').length
   const revealRef = useReveal()
@@ -330,10 +328,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ APARTMENTS ============ */}
+      {/* ============ APARTMENTS PREVIEW ============ */}
       <section id="apartamentos" className="section-darker py-16 sm:py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-14 sm:mb-20 reveal">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+          <div className="mb-12 sm:mb-16 reveal">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-10 h-px bg-[#c9a96e]" />
               <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Portafolio</span>
@@ -342,34 +340,34 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
               {t.apts_title_1} <span className="italic text-gold-gradient">{t.apts_title_2}</span>
             </h2>
-            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">{t.apts_subtitle}</p>
+            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base mb-10">{t.apts_subtitle}</p>
           </div>
 
-          {[{ floor: 3, apts: floor3 }, { floor: 4, apts: floor4 }].map(({ floor, apts }) => (
-            <div key={floor} className={floor === 3 ? 'mb-14 sm:mb-20' : ''}>
-              <div className="flex items-center gap-4 mb-8 sm:mb-10 reveal">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 border border-[#c9a96e]/50 flex items-center justify-center">
-                  <span className="text-[#c9a96e] text-lg sm:text-xl font-light" style={{ fontFamily: 'Playfair Display' }}>{floor}</span>
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-light" style={{ fontFamily: 'Playfair Display' }}>{t.apts_plant} {floor}</h3>
-                  <p className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-[#666]">6 {t.fig_apartments.toLowerCase()} &middot; {t.apts_from} {formatEur(Math.min(...apts.map(a => a.price)))}</p>
-                </div>
-                <div className="ml-auto hidden sm:block">
-                  <span className="text-xs text-[#c9a96e] border border-[#c9a96e]/30 px-3 py-1.5">{apts.filter(a => a.status === 'available').length} disponibles</span>
-                </div>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 stagger-children">
-                {apts.map(apt => <ApartmentCard key={apt.id} apt={apt} t={t} />)}
-              </div>
+          {/* Key stats */}
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 mb-12 reveal">
+            <div className="p-5 sm:p-8 border border-[#c9a96e]/15">
+              <p className="text-3xl sm:text-4xl text-[#c9a96e] font-light mb-1" style={{ fontFamily: 'Playfair Display' }}>{available}</p>
+              <p className="text-[9px] sm:text-xs tracking-[0.15em] uppercase text-[#888]">Disponibles</p>
             </div>
-          ))}
-
-          <div className="mt-12 sm:mt-16 p-6 sm:p-8 border border-[#c9a96e]/20 text-center reveal glass">
-            <p className="text-xs tracking-[0.2em] uppercase text-[#c9a96e] mb-2">Precio medio de todos los apartamentos</p>
-            <p className="text-3xl sm:text-4xl text-[#c9a96e] font-light" style={{ fontFamily: 'Playfair Display' }}>{formatEur(avgPrice)}</p>
-            <p className="text-xs text-[#666] mt-2">IVA no incluido &middot; Financiacion disponible</p>
+            <div className="p-5 sm:p-8 border border-[#c9a96e]/15">
+              <p className="text-3xl sm:text-4xl text-[#c9a96e] font-light mb-1" style={{ fontFamily: 'Playfair Display' }}>{formatEur(avgPrice)}</p>
+              <p className="text-[9px] sm:text-xs tracking-[0.15em] uppercase text-[#888]">Precio medio</p>
+            </div>
+            <div className="p-5 sm:p-8 border border-[#c9a96e]/15">
+              <p className="text-3xl sm:text-4xl text-[#c9a96e] font-light mb-1" style={{ fontFamily: 'Playfair Display' }}>45-72</p>
+              <p className="text-[9px] sm:text-xs tracking-[0.15em] uppercase text-[#888]">m&sup2; construidos</p>
+            </div>
           </div>
+
+          {/* Preview cards — just 3 */}
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-12 stagger-children">
+            {apartments.slice(0, 3).map(apt => <ApartmentCard key={apt.id} apt={apt} t={t} />)}
+          </div>
+
+          <Link href="/apartamentos" className="btn-gold inline-flex">
+            Ver los 12 apartamentos &rarr;
+          </Link>
+          <p className="text-xs text-[#666] mt-4">Plantas 3 y 4 &middot; 1-2 dormitorios &middot; IVA no incluido</p>
         </div>
       </section>
 
