@@ -111,9 +111,21 @@ function ReservarContent() {
               <div><label className="text-xs tracking-[0.15em] uppercase text-[#888] block mb-2">Teléfono *</label><input type="tel" className="luxury-input" value={form.telefono} onChange={e => set('telefono', e.target.value)} /></div>
               <div><label className="text-xs tracking-[0.15em] uppercase text-[#888] block mb-2">Dirección</label><input className="luxury-input" value={form.direccion} onChange={e => set('direccion', e.target.value)} /></div>
             </div>
+            {error && <div className="p-4 border border-red-500/30 bg-red-500/5 text-red-400 text-sm mb-4">{error}</div>}
             <div className="flex gap-4">
               <button onClick={() => setStep(1)} className="btn-outline flex-1">Atrás</button>
-              <button onClick={() => setStep(3)} className="btn-gold flex-1">Continuar</button>
+              <button onClick={() => {
+                if (!form.nombre || !form.apellidos || !form.dni || !form.email || !form.telefono) {
+                  setError('Complete todos los campos obligatorios (*)')
+                  return
+                }
+                if (!form.email.includes('@')) {
+                  setError('Introduzca un email válido')
+                  return
+                }
+                setError('')
+                setStep(3)
+              }} className="btn-gold flex-1">Continuar</button>
             </div>
           </div>
         )}

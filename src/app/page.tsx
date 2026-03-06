@@ -36,35 +36,22 @@ const ZONE_IMGS = {
   nautico: `${ZONE}/xslide11.jpg.pagespeed.ic.pfYgG3DoMn.jpg`,
 }
 
-/* Unsplash — aspirational luxury interiors (supplement real photos) */
-const UNS = 'https://images.unsplash.com'
-const LUXURY = {
-  hero:      `${UNS}/photo-1507525428034-b723cf961d3e?w=1920&q=85`,
-  living1:   `${UNS}/photo-1600585154340-be6161a56a0c?w=940&q=80`,
-  living2:   `${UNS}/photo-1600596542815-ffad4c1539a9?w=940&q=80`,
-  kitchen:   `${UNS}/photo-1600566753086-00f18fb6b3ea?w=940&q=80`,
-  bedroom:   `${UNS}/photo-1616594039964-ae9021a400a0?w=940&q=80`,
-  bath:      `${UNS}/photo-1600607687939-ce8a6c25118c?w=940&q=80`,
-  terrace:   `${UNS}/photo-1600607687644-c7171b42498f?w=940&q=80`,
-  sunset:    `${UNS}/photo-1559827260-dc66d52bef19?w=1920&q=85`,
-  coast:     `${UNS}/photo-1544550581-5f7ceaf7f992?w=1920&q=85`,
-  bars:      `${UNS}/photo-1566417713940-fe7c737a9ef2?w=940&q=80`,
-  nightlife: `${UNS}/photo-1514933651103-005eec06c04b?w=940&q=80`,
-}
+/* La Zenia Boulevard — largest shopping centre in Alicante province */
+const ZENIA_BLVD = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/42/a5/e0/la-zenia-boulevard.jpg?w=1200&h=900&s=1'
 
-/* Per-apartment card images — mix of real + luxury */
+/* Per-apartment card images — mostly real hotel photos */
 const aptImages: Record<string, string> = {
-  '3a': LUXURY.living1,
+  '3a': REAL.living,
   '3b': REAL.seaView,
-  '3c': LUXURY.bedroom,
-  '3d': LUXURY.terrace,
-  '3e': LUXURY.living2,
+  '3c': REAL.bedroom1,
+  '3d': REAL.terrace,
+  '3e': REAL.bedroom2,
   '3f': REAL.dining,
-  '4a': LUXURY.kitchen,
+  '4a': REAL.lobby,
   '4b': REAL.marina,
-  '4c': LUXURY.bath,
+  '4c': REAL.bathroom,
   '4d': REAL.seaView,
-  '4e': LUXURY.living1,
+  '4e': REAL.living,
   '4f': REAL.terrace,
 }
 
@@ -116,11 +103,13 @@ function useCounter(target: number, duration = 2000) {
    HERO CAROUSEL IMAGES
    ══════════════════════════════════════════════════════════════ */
 const heroSlides = [
-  { img: REAL.seaView, label: 'Vista al Mediterraneo desde Diamant Blue' },
-  { img: DB_EXTERIOR, label: 'Apartahotel Diamant Blue - Fachada' },
-  { img: ZONE_IMGS.beach, label: 'Playa de Cabo Roig' },
-  { img: REAL.pool, label: 'Piscina comunitaria' },
+  { img: DB_EXTERIOR, label: 'Apartahotel Diamant Blue - Cabo Roig' },
   { img: ZONE_IMGS.beach, label: 'Playa de Cabo Roig - Bandera Azul' },
+  { img: REAL.seaView, label: 'Vista al Mediterraneo desde Diamant Blue' },
+  { img: REAL.pool, label: 'Piscina comunitaria Diamant Blue' },
+  { img: ZONE_IMGS.coast, label: 'Costa de Orihuela Costa, Alicante' },
+  { img: REAL.living, label: 'Interior de apartamento - Diamant Blue' },
+  { img: ZONE_IMGS.strip, label: 'Strip de Cabo Roig - Restaurantes' },
 ]
 
 /* ══════════════════════════════════════════════════════════════
@@ -144,7 +133,7 @@ export default function Home() {
 
   /* Video */
   const [videoOpen, setVideoOpen] = useState(false)
-  const VIDEO_URL = 'https://assets.mixkit.co/videos/51500/51500-1080.mp4'
+  const VIDEO_BG = 'https://assets.mixkit.co/videos/51500/51500-720.mp4'
 
   /* Gallery lightbox */
   const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null)
@@ -158,29 +147,32 @@ export default function Home() {
   return (
     <div ref={revealRef}>
       {/* ============ HERO — FULL SCREEN CAROUSEL ============ */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
-        {/* Carousel images */}
+      <section className="relative h-[100svh] min-h-[600px] flex items-center justify-center overflow-hidden">
+        {/* Carousel images — preload all for smooth mobile transitions */}
         {heroSlides.map((slide, i) => (
-          <div key={i} className={`absolute inset-0 transition-opacity duration-[2000ms] ${i === heroIdx ? 'opacity-100' : 'opacity-0'}`}>
+          <div key={i} className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${i === heroIdx ? 'opacity-100 z-[1]' : 'opacity-0 z-0'}`}>
             <img src={slide.img} alt={slide.label}
-              className="w-full h-full object-cover"
-              style={{ animation: i === heroIdx ? 'slowZoom 12s ease-in-out forwards' : 'none' }} />
+              className="w-full h-full object-cover will-change-transform"
+              loading={i < 3 ? 'eager' : 'lazy'}
+              style={{ animation: i === heroIdx ? 'slowZoom 10s ease-in-out forwards' : 'none' }} />
           </div>
         ))}
-        <div className="hero-overlay absolute inset-0 z-[1]" />
+        <div className="hero-overlay absolute inset-0 z-[2]" />
 
         {/* Content */}
         <div className="relative z-10 text-center px-6 max-w-5xl animate-fade-in">
-          <div className="inline-flex items-center gap-3 mb-6 sm:mb-8">
-            <div className="w-12 h-px bg-[#c9a96e]" />
-            <span className="text-[10px] sm:text-xs tracking-[0.5em] uppercase text-[#c9a96e] font-medium">{t.hero_exclusive}</span>
-            <div className="w-12 h-px bg-[#c9a96e]" />
+          <div className="inline-flex items-center gap-2 sm:gap-3 mb-5 sm:mb-8">
+            <div className="w-8 sm:w-12 h-px bg-[#c9a96e]" />
+            <span className="text-[9px] sm:text-xs tracking-[0.4em] sm:tracking-[0.5em] uppercase text-[#c9a96e] font-medium flex items-center gap-2">
+              <span className="text-[7px] sm:text-[9px]">◆</span> {t.hero_exclusive} <span className="text-[7px] sm:text-[9px]">◆</span>
+            </span>
+            <div className="w-8 sm:w-12 h-px bg-[#c9a96e]" />
           </div>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-light mb-4 sm:mb-6 leading-[0.92] tracking-tight" style={{ fontFamily: 'Playfair Display' }}>
+          <h1 className="text-[2.2rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-light mb-4 sm:mb-6 leading-[0.95] tracking-tight" style={{ fontFamily: 'Playfair Display' }}>
             {t.hero_title_1}<br />
             <span className="italic gold-shimmer">{t.hero_title_2}</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[#d4d4d4] font-light max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">{t.hero_desc}</p>
+          <p className="text-sm sm:text-lg md:text-xl text-[#d4d4d4] font-light max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed">{t.hero_desc}</p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8">
             <a href="#apartamentos" className="btn-gold w-full sm:w-auto">{t.hero_discover}</a>
@@ -198,15 +190,15 @@ export default function Home() {
         </div>
 
         {/* Hero carousel indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 sm:gap-3">
           {heroSlides.map((_, i) => (
-            <button key={i} onClick={() => { setHeroIdx(i); clearInterval(heroTimerRef.current) }}
-              className={`transition-all duration-500 ${i === heroIdx ? 'w-10 h-1 bg-[#c9a96e]' : 'w-4 h-1 bg-white/30 hover:bg-white/60'}`} />
+            <button key={i} onClick={() => { setHeroIdx(i); clearInterval(heroTimerRef.current); heroTimerRef.current = setInterval(() => setHeroIdx(idx => (idx + 1) % heroSlides.length), 5000) }}
+              className={`transition-all duration-500 ${i === heroIdx ? 'w-8 sm:w-10 h-1 bg-[#c9a96e]' : 'w-3 sm:w-4 h-1 bg-white/30 hover:bg-white/60'}`} />
           ))}
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-50">
+        {/* Scroll indicator — hidden on mobile for cleaner look */}
+        <div className="absolute bottom-20 sm:bottom-28 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 opacity-50 hidden sm:flex">
           <span className="text-[9px] tracking-[0.3em] uppercase text-[#c9a96e]">{t.hero_scroll}</span>
           <div className="w-px h-8 bg-gradient-to-b from-[#c9a96e] to-transparent animate-pulse" />
         </div>
@@ -253,7 +245,7 @@ export default function Home() {
           <div className="reveal-left">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-10 h-px bg-[#c9a96e]" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Diamant Blue</span>
+              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">◆ Diamant Blue</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-6 leading-tight" style={{ fontFamily: 'Playfair Display' }}>
               {t.about_title_1} <span className="italic text-gold-gradient">{t.about_title_2}</span>
@@ -299,37 +291,37 @@ export default function Home() {
 
       {/* ============ CINEMATIC VIDEO SECTION ============ */}
       <section className="relative py-0 overflow-hidden">
-        <div className="relative h-[50vh] sm:h-[65vh] min-h-[400px]">
+        <div className="relative h-[45vh] sm:h-[65vh] min-h-[350px]">
           <video
-            src={VIDEO_URL}
+            src={VIDEO_BG}
             className="absolute inset-0 w-full h-full object-cover"
             autoPlay muted loop playsInline
-            poster={REAL.seaView}
-            style={{ filter: 'brightness(0.7)' }}
+            poster={ZONE_IMGS.beach}
+            style={{ filter: 'brightness(0.65)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60" />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center px-6 max-w-3xl">
               {/* Play button */}
               <button onClick={() => setVideoOpen(true)}
-                className="group mb-8 inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-white/80 hover:border-[#c9a96e] transition-all hover:scale-110 hover:bg-[#c9a96e]/20 pulse-gold-subtle">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="white" className="ml-1 group-hover:fill-[#c9a96e] transition-colors"><polygon points="5,3 19,12 5,21" /></svg>
+                className="group mb-6 sm:mb-8 inline-flex items-center justify-center w-16 h-16 sm:w-24 sm:h-24 rounded-full border-2 border-white/80 hover:border-[#c9a96e] transition-all hover:scale-110 hover:bg-[#c9a96e]/20 pulse-gold-subtle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white" className="ml-1 group-hover:fill-[#c9a96e] transition-colors sm:w-7 sm:h-7"><polygon points="5,3 19,12 5,21" /></svg>
               </button>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 leading-tight" style={{ fontFamily: 'Playfair Display' }}>
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4 leading-tight" style={{ fontFamily: 'Playfair Display' }}>
                 Descubre <span className="italic text-gold-gradient">Cabo Roig</span>
               </h2>
-              <p className="text-sm sm:text-lg text-[#ddd] font-light leading-relaxed max-w-xl mx-auto">
-                Playas de Bandera Azul, aguas cristalinas del Mediterraneo y mas de 300 dias de sol al ano. Un paraiso en la costa de Alicante.
+              <p className="text-xs sm:text-lg text-[#ddd] font-light leading-relaxed max-w-xl mx-auto">
+                Orihuela Costa, Costa Blanca Sur. Playas de Bandera Azul, puerto deportivo, el Strip con restaurantes y La Zenia Boulevard a 5 minutos.
               </p>
-              <div className="grid grid-cols-3 gap-4 sm:gap-6 max-w-sm sm:max-w-md mx-auto mt-8">
+              <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-xs sm:max-w-md mx-auto mt-6 sm:mt-8">
                 {[
                   { val: '300+', label: 'Dias de sol' },
                   { val: '200m', label: 'A la playa' },
                   { val: '20\u00B0C', label: 'Temp. media' },
                 ].map(s => (
                   <div key={s.label} className="text-center">
-                    <p className="text-2xl sm:text-3xl text-[#c9a96e] font-light" style={{ fontFamily: 'Playfair Display' }}>{s.val}</p>
-                    <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#aaa] mt-1">{s.label}</p>
+                    <p className="text-xl sm:text-3xl text-[#c9a96e] font-light" style={{ fontFamily: 'Playfair Display' }}>{s.val}</p>
+                    <p className="text-[8px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[#aaa] mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -381,33 +373,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ LIFESTYLE — ZONA ============ */}
+      {/* ============ LIFESTYLE — ORIHUELA COSTA ============ */}
       <section className="section-darker py-16 sm:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16 reveal">
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="w-10 h-px bg-[#c9a96e]" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Lifestyle</span>
+              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Orihuela Costa</span>
               <div className="w-10 h-px bg-[#c9a96e]" />
             </div>
             <h2 className="text-3xl sm:text-4xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
               Un estilo de <span className="italic text-gold-gradient">vida unico</span>
             </h2>
-            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">Playas de bandera azul, gastronomia mediterranea y deportes nauticos todo el ano</p>
+            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">Costa Blanca Sur — 16 km de litoral, playas de Bandera Azul, gastronomia y el mayor centro comercial de Alicante</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 reveal-scale">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 reveal-scale">
             {[
-              { img: ZONE_IMGS.beach, title: 'Playa de Cabo Roig', sub: 'Bandera Azul — a 200 metros' },
-              { img: ZONE_IMGS.strip, title: 'Strip de Cabo Roig', sub: 'Restaurantes y ocio — 5 min' },
-              { img: ZONE_IMGS.nautico, title: 'Club Nautico', sub: 'Deportes acuaticos todo el ano' },
+              { img: ZONE_IMGS.beach, title: 'Playa de Cabo Roig', sub: 'Bandera Azul — 200m' },
+              { img: ZONE_IMGS.strip, title: 'Strip de Cabo Roig', sub: 'Restaurantes y pubs' },
+              { img: ZONE_IMGS.nautico, title: 'Puerto Deportivo', sub: 'Club Nautico Cabo Roig' },
+              { img: ZENIA_BLVD, title: 'La Zenia Boulevard', sub: 'Centro comercial — 5 min' },
             ].map(item => (
               <div key={item.title} className="relative group overflow-hidden cursor-pointer"
                 onClick={() => setLightbox({ src: item.img, label: item.title })}>
-                <img src={item.img} alt={item.title} className="w-full h-56 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src={item.img} alt={item.title} className="w-full h-44 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                  <p className="text-sm sm:text-base font-medium">{item.title}</p>
-                  <p className="text-[10px] sm:text-xs text-[#c9a96e] mt-1">{item.sub}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
+                  <p className="text-xs sm:text-sm font-medium">{item.title}</p>
+                  <p className="text-[9px] sm:text-xs text-[#c9a96e] mt-0.5">{item.sub}</p>
                 </div>
               </div>
             ))}
@@ -448,7 +441,7 @@ export default function Home() {
           <div className="reveal-right space-y-4">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3150.0!2d-0.736011!3d37.914426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd63029d27ef1c53%3A0x5e0d4e3b2c8a9f0!2sAparthotel%20Diamant%20Blue!5e0!3m2!1ses!2ses!4v1"
               className="w-full h-72 sm:h-96 border border-[#c9a96e]/20" allowFullScreen loading="lazy" />
-            <p className="text-xs text-[#888] text-center">Calle Agua n 5, Cabo Roig, Orihuela Costa, Alicante</p>
+            <p className="text-xs text-[#888] text-center">Calle Agua n&ordm; 5, Cabo Roig, Orihuela Costa &middot; Costa Blanca Sur, Alicante</p>
           </div>
         </div>
       </section>
@@ -533,13 +526,13 @@ export default function Home() {
           <button onClick={() => setVideoOpen(false)} className="absolute top-6 right-6 text-white text-3xl hover:text-[#c9a96e] z-10 transition-colors">&times;</button>
           <div className="w-full max-w-5xl" onClick={e => e.stopPropagation()}>
             <video
-              src={VIDEO_URL}
+              src={VIDEO_BG}
               className="w-full max-h-[80vh]"
               controls
               autoPlay
               playsInline
             />
-            <p className="text-center text-xs text-[#888] mt-4">Playa mediterranea &middot; Cabo Roig, Costa Blanca</p>
+            <p className="text-center text-xs text-[#888] mt-4">Costa Mediterranea &middot; Cabo Roig, Orihuela Costa, Costa Blanca Sur</p>
           </div>
         </div>
       )}

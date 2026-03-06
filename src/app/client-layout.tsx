@@ -15,8 +15,10 @@ function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <a href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 border border-[#c9a96e] flex items-center justify-center">
+            <div className="w-10 h-10 border border-[#c9a96e] flex items-center justify-center relative">
               <span className="text-[#c9a96e] text-lg font-bold" style={{ fontFamily: 'Playfair Display' }}>D</span>
+              {/* Diamond sparkle */}
+              <span className="absolute -top-1 -right-1 text-[8px] text-[#c9a96e]">◆</span>
             </div>
             <div className="hidden sm:block">
               <p className="text-sm font-semibold tracking-[0.2em] uppercase text-white">Diamant Blue</p>
@@ -26,10 +28,10 @@ function Navigation() {
 
           <div className="flex items-center gap-4 md:gap-8">
             <div className="hidden md:flex items-center gap-8">
-              <a href="#apartamentos" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
-              <a href="#ubicacion" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
-              <a href="#galeria" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_gallery}</a>
-              <a href="#contacto" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
+              <a href="/" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">Inicio</a>
+              <a href="/#apartamentos" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
+              <a href="/#ubicacion" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
+              <a href="/#contacto" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
             </div>
 
             {/* Language selector */}
@@ -72,10 +74,10 @@ function Navigation() {
       {menuOpen && (
         <div className="md:hidden border-t border-white/5" style={{ background: 'rgba(10,10,10,0.95)' }}>
           <div className="px-6 py-6 flex flex-col gap-4">
-            <a href="#apartamentos" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
-            <a href="#ubicacion" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
-            <a href="#galeria" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_gallery}</a>
-            <a href="#contacto" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
+            <a href="/" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">Inicio</a>
+            <a href="/#apartamentos" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
+            <a href="/#ubicacion" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
+            <a href="/#contacto" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
             <Link href="/reservar" onClick={() => setMenuOpen(false)} className="btn-gold text-xs text-center mt-2">{t.nav_reserve}</Link>
           </div>
         </div>
@@ -93,11 +95,12 @@ function Footer() {
         <div className="grid md:grid-cols-3 gap-12">
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 border border-[#c9a96e] flex items-center justify-center">
+              <div className="w-10 h-10 border border-[#c9a96e] flex items-center justify-center relative">
                 <span className="text-[#c9a96e] text-lg font-bold" style={{ fontFamily: 'Playfair Display' }}>D</span>
+                <span className="absolute -top-1 -right-1 text-[8px] text-[#c9a96e]">◆</span>
               </div>
               <div>
-                <p className="text-sm font-semibold tracking-[0.2em] uppercase">Diamant Blue</p>
+                <p className="text-sm font-semibold tracking-[0.2em] uppercase">◆ Diamant Blue</p>
                 <p className="text-[10px] tracking-[0.3em] uppercase text-[#c9a96e]">Cabo Roig</p>
               </div>
             </div>
