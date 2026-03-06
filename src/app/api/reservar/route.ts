@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
         telefono,
         direccion: direccion || '',
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3005'}/contrato-reserva?apt=${apt.id}&nombre=${encodeURIComponent(nombre)}&apellidos=${encodeURIComponent(apellidos)}&dni=${encodeURIComponent(dni)}&payment=success`,
+      success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3005'}/pago-exitoso?apt=${apt.id}&nombre=${encodeURIComponent(nombre)}&apellidos=${encodeURIComponent(apellidos)}&dni=${encodeURIComponent(dni)}&email=${encodeURIComponent(email)}&telefono=${encodeURIComponent(telefono)}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3005'}/reservar?apt=${apt.id}&cancelled=1`,
     })
 

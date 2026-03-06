@@ -5,6 +5,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2025-02-24.acacia' as Stripe.LatestApiVersion,
 })
 
+// In-memory reservation store (for serverless, use DB in production)
+// This persists between requests in the same cold start
+const reservations = new Map<string, { nombre: string; apellidos: string; dni: string; email: string; telefono: string; fecha: string }>()
+
 export async function POST(req: NextRequest) {
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')
@@ -24,10 +28,23 @@ export async function POST(req: NextRequest) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session
       const meta = session.metadata || {}
-      console.log(`[RESERVA COMPLETADA] Apt ${meta.apartmentUnit} — ${meta.nombre} ${meta.apellidos} — ${meta.reservaAmount}€`)
+
+      // Store the reservation
+      if (meta.apartmentId) {
+        reservations.set(meta.apartmentId, {
+          nombre: meta.nombre || '',
+          apellidos: meta.apellidos || '',
+          dni: meta.dni || '',
+          email: meta.email || '',
+          telefono: meta.telefono || '',
+          fecha: new Date().toISOString(),
+        })
+      }
+
+      console.log(`[RESERVA COMPLETADA] Apt ${meta.apartmentUnit} — ${meta.nombre} ${meta.apellidos} — ${meta.reservaAmount}EUR`)
       console.log(`  DNI: ${meta.dni}, Email: ${meta.email}, Tel: ${meta.telefono}`)
-      // Here you would update apartment status in a database
-      // and send confirmation emails
+      console.log(`  WhatsApp: https://wa.me/34620300647?text=${encodeURIComponent(`RESERVA COMPLETADA! Apt ${meta.apartmentUnit} reservado por ${meta.nombre} ${meta.apellidos} (${meta.dni}). Tel: ${meta.telefono}. Email: ${meta.email}. Importe: ${meta.reservaAmount}EUR`)}`)
+
       break
     }
     case 'payment_intent.payment_failed': {

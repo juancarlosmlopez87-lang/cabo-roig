@@ -53,7 +53,7 @@ function ReservarContent() {
           <h1 className="text-4xl md:text-5xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
             Reservar <span className="italic text-[#c9a96e]">apartamento</span>
           </h1>
-          <p className="text-[#888]">La señal de reserva es del 5% del precio + IVA. Se descuenta íntegramente del precio final en escritura.</p>
+          <p className="text-[#888]">La señal de reserva es del 5% del precio + IVA. Reserva tu apartamento de forma segura. La señal confirma tu interés y retira el inmueble del mercado.</p>
         </div>
 
         {/* Steps */}
@@ -151,9 +151,7 @@ function ReservarContent() {
             <label className="flex items-start gap-3 mb-6 cursor-pointer">
               <input type="checkbox" checked={accepted} onChange={e => setAccepted(e.target.checked)} className="mt-1 w-4 h-4 accent-[#c9a96e]" />
               <span className="text-sm text-[#888]">
-                He leído y acepto las condiciones de reserva. Entiendo que la señal del 5% + IVA se descontará
-                del precio total de la vivienda en el momento de la escritura pública de compraventa. En caso de desistimiento, la señal no será reembolsable.
-                Al pagar, se generará un contrato de reserva vinculante.
+                He leído y acepto las condiciones de reserva. Entiendo que la señal del 5% + IVA confirma la reserva del apartamento y lo retira del mercado durante 30 días. En caso de desistimiento, la señal no será reembolsable. Al pagar, se generará un contrato de reserva vinculante.
               </span>
             </label>
 

@@ -51,10 +51,27 @@ function ContratoReservaContent() {
     canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height)
     setFirmaComprador('')
   }
-  function firmar() {
+  async function firmar() {
     if (!firmaComprador || !nombre.trim() || !dni.trim()) return
-    setFechaFirma(new Date().toLocaleString('es-ES'))
+    const now = new Date().toLocaleString('es-ES')
+    setFechaFirma(now)
     setFirmado(true)
+    try {
+      await fetch('/api/contrato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tipo: 'reserva',
+          apartamento: apt!.id,
+          firmante: `${nombre.trim()} ${apellidos.trim()}`,
+          firma: firmaComprador,
+          dni: dni.trim(),
+          fecha: now,
+        }),
+      })
+    } catch (e) { console.error('Error guardando contrato:', e) }
+    const msg = encodeURIComponent(`Nueva reserva firmada: Apartamento ${apt!.unit} por ${nombre.trim()} ${apellidos.trim()}`)
+    window.open(`https://wa.me/34620300647?text=${msg}`, '_blank')
   }
 
   if (!apt) return <div className="pt-24 text-center text-[#888] min-h-screen"><p>Apartamento no encontrado</p></div>
@@ -118,14 +135,14 @@ function ContratoReservaContent() {
 
             <p><strong>TERCERA. — Señal de reserva.</strong><br />
             En concepto de señal de reserva, EL/LA RESERVANTE abona en este acto la cantidad de <strong>{formatEur(reserva)}</strong> (cinco por ciento del precio), más IVA al 21% ({formatEur(iva)}), lo que suma un total de <strong>{formatEur(total)}</strong>.<br /><br />
-            Dicha cantidad se abona mediante pago electrónico seguro a través de la plataforma de INMOBANCA en concepto de señal de reserva. Este importe será <strong>descontado íntegramente del precio final</strong> de la vivienda en el momento de la firma de la escritura pública de compraventa.</p>
+            Dicha cantidad se abona mediante pago electrónico seguro a través de la plataforma de INMOBANCA en concepto de señal de reserva.</p>
 
             <p><strong>CUARTA. — Efectos de la reserva.</strong><br />
             El pago de la señal implica la retirada del inmueble del mercado durante un plazo máximo de <strong>30 días naturales</strong>, período en el cual deberá formalizarse el contrato de arras o la escritura pública de compraventa.<br /><br />
             Transcurrido dicho plazo sin haberse formalizado, la reserva quedará sin efecto y la señal se perderá en concepto de indemnización a favor de la propiedad.</p>
 
             <p><strong>QUINTA. — Desistimiento.</strong><br />
-            Si EL/LA RESERVANTE desiste de la compra, <strong>perderá la señal entregada</strong>. Si LA PARTE VENDEDORA desiste, deberá devolver el doble de la cantidad recibida.</p>
+            Si EL/LA RESERVANTE desiste de la compra, <strong>perderá la señal entregada</strong>. Si LA PARTE VENDEDORA desiste de la venta, se procederá a la <strong>devolución íntegra</strong> de la señal entregada por EL/LA RESERVANTE.</p>
 
             <p><strong>SEXTA. — Gastos.</strong><br />
             Los gastos de escritura, registro, notaría, y tributos derivados de la compraventa serán a cargo de cada parte según la legislación vigente.</p>
@@ -181,7 +198,16 @@ function ContratoReservaContent() {
             <div className="mt-8 p-6 border border-green-500/30 bg-green-500/5 text-center">
               <p className="text-green-400 text-lg font-light mb-2" style={{ fontFamily: 'Playfair Display' }}>Contrato de reserva firmado</p>
               <p className="text-sm text-[#888]">Firmado digitalmente el {fechaFirma}</p>
-              <button onClick={() => window.print()} className="btn-outline mt-4 text-xs">Imprimir / Guardar PDF</button>
+              <div className="flex flex-wrap justify-center gap-3 mt-4">
+                <button onClick={() => window.print()} className="btn-outline text-xs">Descargar contrato</button>
+                <a
+                  href={`mailto:?subject=${encodeURIComponent(`Contrato de Reserva - Apartamento ${apt.unit}`)}&body=${encodeURIComponent(`Contrato de reserva firmado por ${nombre} ${apellidos} el ${fechaFirma} para el Apartamento ${apt.unit}, Residencial Diamant Blue, Cabo Roig.\n\nPor favor, utilice la función de imprimir/guardar PDF desde la página del contrato para adjuntar el documento.`)}`}
+                  className="btn-outline text-xs inline-block"
+                >
+                  Enviar por email
+                </a>
+                <button onClick={() => window.print()} className="btn-outline text-xs">Imprimir / Guardar PDF</button>
+              </div>
             </div>
           )}
         </div>

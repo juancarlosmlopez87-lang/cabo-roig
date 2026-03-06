@@ -7,6 +7,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'images.getaroom-cdn.com' },
       { protocol: 'https', hostname: 'apart-diamant-blue.costablanca-hotels.com' },
       { protocol: 'https', hostname: 'www.costablanca-hotels.com' },
+      { protocol: 'https', hostname: 'videos.pexels.com' },
       { protocol: 'https', hostname: 'foto.hrsstatic.com' },
     ],
   },
