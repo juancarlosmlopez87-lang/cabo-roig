@@ -381,68 +381,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ REAL PHOTOS GALLERY ============ */}
-      <section id="galeria" className="section-dark py-16 sm:py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-14 sm:mb-20 reveal">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="w-10 h-px bg-[#c9a96e]" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Galeria</span>
-              <div className="w-10 h-px bg-[#c9a96e]" />
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
-              {t.gal_title_1} <span className="italic text-gold-gradient">{t.gal_title_2}</span>
-            </h2>
-            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">{t.gal_subtitle}</p>
-          </div>
-
-          {/* Masonry-style gallery with REAL photos */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 reveal-scale">
-            {/* Large: Exterior */}
-            <GalleryItem src={DB_EXTERIOR} label="Apartahotel Diamant Blue" sub="Fachada principal" large onClick={setLightbox} />
-            {/* Small items */}
-            <GalleryItem src={REAL.seaView} label="Vista al Mediterraneo" sub="Desde planta 4" onClick={setLightbox} />
-            <GalleryItem src={REAL.pool} label="Piscina Comunitaria" sub="Agua climatizada" onClick={setLightbox} />
-            <GalleryItem src={REAL.terrace} label="Terraza Lounge" sub="Zona de relax" onClick={setLightbox} />
-            <GalleryItem src={REAL.lobby} label="Lobby" sub="Recepcion decorada" onClick={setLightbox} />
-            {/* Real interior photos */}
-            <GalleryItem src={REAL.dining} label="Comedor" sub="Mesa preparada" onClick={setLightbox} />
-            <GalleryItem src={REAL.living} label="Salon" sub="Con terraza acristalada" onClick={setLightbox} />
-            {/* Zone photos */}
-            <GalleryItem src={ZONE_IMGS.beach} label="Playa Cabo Roig" sub="Bandera Azul - 200m" onClick={setLightbox} />
-            <GalleryItem src={REAL.marina} label="Marina" sub="Puerto deportivo" onClick={setLightbox} />
-            <GalleryItem src={ZONE_IMGS.nautico} label="Club Nautico" sub="Cabo Roig" onClick={setLightbox} />
-          </div>
-        </div>
-      </section>
-
-      {/* ============ FULL BUILDING SHOWCASE ============ */}
-      <section className="relative py-0 overflow-hidden">
-        <div className="relative h-[60vh] sm:h-[75vh] min-h-[450px]">
-          <img src={DB_EXTERIOR} alt="Apartahotel Diamant Blue - Fachada" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
-          <div className="absolute inset-0 flex items-end pb-16 sm:pb-20">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-3 mb-4">
-                  <div className="w-10 h-px bg-[#c9a96e]" />
-                  <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">{t.hero_exclusive}</span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl md:text-6xl font-light mb-4 leading-tight" style={{ fontFamily: 'Playfair Display' }}>
-                  Residencial <span className="italic text-gold-gradient">Diamant Blue</span>
-                </h2>
-                <p className="text-sm sm:text-base text-[#ccc] font-light leading-relaxed mb-6">{t.apts_subtitle}</p>
-                <p className="text-xs text-[#888] mb-6">Calle Agua n 5, Cabo Roig, Orihuela Costa, Alicante</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a href="/reservar" className="btn-gold">{t.hero_reserve}</a>
-                  <a href="#contacto" className="btn-outline">{t.nav_contact}</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ============ LIFESTYLE — ZONA ============ */}
       <section className="section-darker py-16 sm:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -455,63 +393,21 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
               Un estilo de <span className="italic text-gold-gradient">vida unico</span>
             </h2>
-            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">Playas de bandera azul, paseo maritimo con restaurantes, La Zenia Boulevard y deportes nauticos todo el ano</p>
+            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">Playas de bandera azul, gastronomia mediterranea y deportes nauticos todo el ano</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 reveal-scale">
+          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 reveal-scale">
             {[
-              { img: ZONE_IMGS.beach, title: 'Playa de Cabo Roig', sub: 'Bandera Azul - 200m' },
-              { img: ZONE_IMGS.strip, title: 'Strip de Cabo Roig', sub: 'Restaurantes y bares - 5 min' },
-              { img: ZONE_IMGS.calas, title: 'Calas y playas', sub: 'Aguas cristalinas' },
-              { img: LUXURY.bars, title: 'Terrazas y Restaurantes', sub: 'Gastronomia mediterranea' },
-              { img: ZONE_IMGS.coast, title: 'Costa Mediterranea', sub: 'La Zenia Boulevard - 5 min' },
-              { img: ZONE_IMGS.nautico, title: 'Club Nautico', sub: 'Deportes acuaticos' },
+              { img: ZONE_IMGS.beach, title: 'Playa de Cabo Roig', sub: 'Bandera Azul — a 200 metros' },
+              { img: ZONE_IMGS.strip, title: 'Strip de Cabo Roig', sub: 'Restaurantes y ocio — 5 min' },
+              { img: ZONE_IMGS.nautico, title: 'Club Nautico', sub: 'Deportes acuaticos todo el ano' },
             ].map(item => (
               <div key={item.title} className="relative group overflow-hidden cursor-pointer"
                 onClick={() => setLightbox({ src: item.img, label: item.title })}>
-                <img src={item.img} alt={item.title} className="w-full h-44 sm:h-60 object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
-                  <p className="text-xs sm:text-sm font-medium">{item.title}</p>
-                  <p className="text-[10px] sm:text-xs text-[#c9a96e]">{item.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ REAL INTERIORS SHOWCASE ============ */}
-      <section className="section-dark py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16 reveal">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="w-10 h-px bg-[#c9a96e]" />
-              <span className="text-[10px] tracking-[0.4em] uppercase text-[#c9a96e]">Interiores</span>
-              <div className="w-10 h-px bg-[#c9a96e]" />
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-light mb-4" style={{ fontFamily: 'Playfair Display' }}>
-              Conoce los <span className="italic text-gold-gradient">espacios</span>
-            </h2>
-            <p className="text-[#888] max-w-xl mx-auto text-sm sm:text-base">Fotos reales del interior de los apartamentos del Diamant Blue</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 reveal-scale">
-            {[
-              { img: REAL.living, label: 'Salon con terraza' },
-              { img: REAL.bedroom2, label: 'Dormitorio principal' },
-              { img: REAL.bathroom, label: 'Bano completo' },
-              { img: REAL.dining, label: 'Comedor' },
-              { img: REAL.terrace, label: 'Terraza lounge' },
-              { img: REAL.lobby, label: 'Lobby del hotel' },
-              { img: REAL.bedroom1, label: 'Dormitorio' },
-              { img: REAL.pool, label: 'Zona piscina' },
-            ].map((item, i) => (
-              <div key={i} className="relative group overflow-hidden cursor-pointer aspect-square"
-                onClick={() => setLightbox({ src: item.img, label: item.label })}>
-                <img src={item.img} alt={item.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs tracking-widest uppercase bg-black/50 px-3 py-1.5">
-                    {item.label}
-                  </span>
+                <img src={item.img} alt={item.title} className="w-full h-56 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                  <p className="text-sm sm:text-base font-medium">{item.title}</p>
+                  <p className="text-[10px] sm:text-xs text-[#c9a96e] mt-1">{item.sub}</p>
                 </div>
               </div>
             ))}
@@ -666,33 +562,6 @@ export default function Home() {
           to { transform: scale(1.15); }
         }
       `}</style>
-    </div>
-  )
-}
-
-/* ══════════════════════════════════════════════════════════════
-   GALLERY ITEM
-   ══════════════════════════════════════════════════════════════ */
-function GalleryItem({ src, label, sub, large, onClick }: {
-  src: string; label: string; sub?: string; large?: boolean;
-  onClick: (item: { src: string; label: string }) => void
-}) {
-  return (
-    <div className={`relative group overflow-hidden cursor-pointer ${large ? 'col-span-2 row-span-2' : ''}`}
-      onClick={() => onClick({ src, label })}>
-      <img src={src} alt={label}
-        className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${large ? 'h-full min-h-[280px] sm:min-h-[350px]' : 'h-36 sm:h-48'}`} />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-        <p className="text-xs sm:text-sm font-medium text-white">{label}</p>
-        {sub && <p className="text-[10px] sm:text-xs text-[#c9a96e]">{sub}</p>}
-      </div>
-      {/* Zoom icon */}
-      <div className="absolute top-3 right-3 w-8 h-8 bg-black/50 backdrop-blur flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-          <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /><path d="M11 8v6M8 11h6" />
-        </svg>
-      </div>
     </div>
   )
 }
