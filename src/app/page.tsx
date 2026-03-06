@@ -63,7 +63,7 @@ function useReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
-      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.01, rootMargin: '0px 0px 0px 0px' }
     )
     ref.current?.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(c => observer.observe(c))
     return () => observer.disconnect()
@@ -437,7 +437,7 @@ export default function Home() {
             </div>
           </div>
           <div className="reveal-right space-y-4">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3150.0!2d-0.736011!3d37.914426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd63029d27ef1c53%3A0x5e0d4e3b2c8a9f0!2sAparthotel%20Diamant%20Blue!5e0!3m2!1ses!2ses!4v1"
+            <iframe src="https://maps.google.com/maps?q=Aparthotel+Diamant+Blue,+Calle+Agua+5,+Cabo+Roig,+Orihuela+Costa&t=&z=16&ie=UTF8&iwloc=B&output=embed"
               className="w-full h-72 sm:h-96 border border-[#c9a96e]/20" allowFullScreen loading="lazy" />
             <p className="text-xs text-[#888] text-center">Calle Agua n&ordm; 5, Cabo Roig, Orihuela Costa &middot; Costa Blanca Sur, Alicante</p>
           </div>

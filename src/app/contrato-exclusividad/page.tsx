@@ -220,6 +220,115 @@ export default function ContratoExclusividadPage() {
             Para cuantas cuestiones pudieran derivarse del presente contrato, ambas partes se someten a la jurisdiccion de los Juzgados y Tribunales de Orihuela (Alicante), con renuncia expresa a cualquier otro fuero que pudiera corresponderles.</p>
 
             <p>Y en prueba de conformidad, ambas partes firman el presente documento, por duplicado y a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
+
+            {/* ANEXO I - Desglose economico */}
+            <div className="mt-12 pt-8 border-t border-white/10 print:border-black/20">
+              <h3 className="text-[#c9a96e] text-base font-semibold tracking-wider uppercase mb-6 print:text-black">ANEXO I -- DESGLOSE ECONOMICO POR VIVIENDA</h3>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-[#c9a96e]/30 print:border-black/30">
+                      <th className="py-2 px-2 text-left text-[#c9a96e] print:text-black">Apt.</th>
+                      <th className="py-2 px-2 text-left text-[#c9a96e] print:text-black">Planta</th>
+                      <th className="py-2 px-2 text-right text-[#c9a96e] print:text-black">Precio venta</th>
+                      <th className="py-2 px-2 text-right text-[#c9a96e] print:text-black">Comision 5%</th>
+                      <th className="py-2 px-2 text-right text-[#c9a96e] print:text-black">IVA 21%</th>
+                      <th className="py-2 px-2 text-right text-[#c9a96e] print:text-black">Total comision</th>
+                      <th className="py-2 px-2 text-right text-[#c9a96e] print:text-black">Neto propietaria</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { unit: '3A', floor: 3, price: 148000 },
+                      { unit: '3B', floor: 3, price: 172000 },
+                      { unit: '3C', floor: 3, price: 156000 },
+                      { unit: '3D', floor: 3, price: 178000 },
+                      { unit: '3E', floor: 3, price: 152000 },
+                      { unit: '3F', floor: 3, price: 175000 },
+                      { unit: '4A', floor: 4, price: 155000 },
+                      { unit: '4B', floor: 4, price: 179000 },
+                      { unit: '4C', floor: 4, price: 162000 },
+                      { unit: '4D', floor: 4, price: 185000 },
+                      { unit: '4E', floor: 4, price: 158000 },
+                      { unit: '4F', floor: 4, price: 172000 },
+                    ].map((apt, i) => {
+                      const comision = apt.price * 0.05
+                      const iva = comision * 0.21
+                      const totalCom = comision + iva
+                      const neto = apt.price - totalCom
+                      return (
+                        <tr key={i} className="border-b border-white/5 print:border-black/10">
+                          <td className="py-2 px-2 font-medium">{apt.unit}</td>
+                          <td className="py-2 px-2">{apt.floor}</td>
+                          <td className="py-2 px-2 text-right">{apt.price.toLocaleString('es-ES')} &euro;</td>
+                          <td className="py-2 px-2 text-right">{comision.toLocaleString('es-ES')} &euro;</td>
+                          <td className="py-2 px-2 text-right">{Math.round(iva).toLocaleString('es-ES')} &euro;</td>
+                          <td className="py-2 px-2 text-right text-[#c9a96e] print:text-black">{Math.round(totalCom).toLocaleString('es-ES')} &euro;</td>
+                          <td className="py-2 px-2 text-right font-medium">{Math.round(neto).toLocaleString('es-ES')} &euro;</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                  <tfoot>
+                    <tr className="border-t-2 border-[#c9a96e]/50 print:border-black/50 font-semibold">
+                      <td className="py-3 px-2" colSpan={2}>TOTAL 12 viviendas</td>
+                      <td className="py-3 px-2 text-right">1.992.000 &euro;</td>
+                      <td className="py-3 px-2 text-right">99.600 &euro;</td>
+                      <td className="py-3 px-2 text-right">20.916 &euro;</td>
+                      <td className="py-3 px-2 text-right text-[#c9a96e] print:text-black">120.516 &euro;</td>
+                      <td className="py-3 px-2 text-right">1.871.484 &euro;</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <div className="mt-8 p-5 border border-[#c9a96e]/20 bg-[#c9a96e]/5 print:bg-transparent print:border-black/20">
+                <p className="text-xs tracking-[0.15em] uppercase text-[#c9a96e] mb-3 print:text-black font-semibold">Resumen economico</p>
+                <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Precio medio por vivienda:</p>
+                    <p className="text-lg text-white print:text-black font-light" style={{ fontFamily: 'Playfair Display' }}>166.000 &euro;</p>
+                  </div>
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Comision INMOBANCA por vivienda (5% + IVA 21%):</p>
+                    <p className="text-lg text-[#c9a96e] print:text-black font-light" style={{ fontFamily: 'Playfair Display' }}>10.043 &euro;</p>
+                  </div>
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Neto limpio propietaria por vivienda:</p>
+                    <p className="text-2xl text-white print:text-black font-semibold" style={{ fontFamily: 'Playfair Display' }}>~156.000 &euro;</p>
+                  </div>
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Total neto propietaria (12 viviendas):</p>
+                    <p className="text-2xl text-white print:text-black font-semibold" style={{ fontFamily: 'Playfair Display' }}>~1.872.000 &euro;</p>
+                  </div>
+                </div>
+                <p className="text-xs text-[#888] mt-4 print:text-black/60">El comprador ingresa el precio total (166.000 &euro;) el dia de la firma ante notario. La propietaria recibe 156.000 &euro; limpios por vivienda tras descontar la comision de INMOBANCA.</p>
+              </div>
+
+              {/* Proyeccion 25 viviendas */}
+              <div className="mt-8 p-5 border border-white/10 print:border-black/20">
+                <p className="text-xs tracking-[0.15em] uppercase text-[#c9a96e] mb-3 print:text-black font-semibold">Proyeccion total del edificio (25 viviendas)</p>
+                <p className="text-sm text-[#888] mb-4 print:text-black/70">El edificio Diamant Blue cuenta con un total de 25 unidades residenciales. El presente contrato se refiere a las 12 viviendas de las Plantas 3 y 4. A continuacion se muestra la proyeccion a precio medio si se vendieran las 25 unidades.</p>
+                <div className="grid sm:grid-cols-2 gap-6 text-sm">
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Valor total 25 viviendas (166.000 &euro; &times; 25):</p>
+                    <p className="text-xl text-white print:text-black font-light" style={{ fontFamily: 'Playfair Display' }}>4.150.000 &euro;</p>
+                  </div>
+                  <div>
+                    <p className="text-[#888] print:text-black/60">Total comisiones 25 uds. (5% + IVA):</p>
+                    <p className="text-xl text-[#c9a96e] print:text-black font-light" style={{ fontFamily: 'Playfair Display' }}>250.000 &euro;</p>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <p className="text-[#888] print:text-black/60">Neto limpio propietaria por 25 viviendas (156.000 &euro; &times; 25):</p>
+                    <p className="text-3xl text-white print:text-black font-semibold" style={{ fontFamily: 'Playfair Display' }}>3.900.000 &euro;</p>
+                  </div>
+                </div>
+                <p className="text-xs text-[#666] mt-4 print:text-black/50 italic">* Proyeccion orientativa. Las 12 viviendas de Plantas 3 y 4 son objeto del presente contrato. Las restantes 13 unidades quedan reservadas para gestion de alquiler por parte de INMOBANCA.</p>
+              </div>
+
+              <p className="text-xs text-[#666] mt-6 print:text-black/50">Nota: El comprador abonara el precio total del inmueble directamente a LA PROPIEDAD en el acto de firma de la escritura publica. La comision de INMOBANCA se materializa mediante la retencion de la senal de reserva (5% + IVA), como se establece en las Clausulas Quinta y Sexta. INMOBANCA emitira factura por cada operacion.</p>
+            </div>
           </div>
 
           {/* Signatures */}
