@@ -10,6 +10,8 @@ export default function ContratoExclusividadPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [drawing, setDrawing] = useState(false)
   const [firmaPropietaria, setFirmaPropietaria] = useState('')
+  const [nombreProp, setNombreProp] = useState('')
+  const [dniProp, setDniProp] = useState('')
 
   function startDraw(e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) {
     setDrawing(true)
@@ -51,7 +53,7 @@ export default function ContratoExclusividadPage() {
   }
 
   async function firmarContrato() {
-    if (!firma || !firmaPropietaria) return
+    if (!firma || !firmaPropietaria || !nombreProp || !dniProp) return
     setEnviando(true)
 
     const ahora = new Date().toLocaleString('es-ES')
@@ -67,6 +69,8 @@ export default function ContratoExclusividadPage() {
           firma: firmaPropietaria,
           datos: {
             fechaFirma: ahora,
+            nombrePropietaria: nombreProp,
+            dniPropietaria: dniProp,
             propiedad: 'Apartahotel Diamant Blue, Plantas 3 y 4, Cabo Roig',
             tipoContrato: 'Mandato de comercializacion en exclusiva',
           },
@@ -86,7 +90,7 @@ export default function ContratoExclusividadPage() {
 
     // Send WhatsApp notification to Juan Carlos
     const msgJC = encodeURIComponent(
-      `CONTRATO EXCLUSIVIDAD FIRMADO\nFirmante: ${firma}\nFecha: ${ahora}\nPropiedad: Apartahotel Diamant Blue, Plantas 3 y 4`
+      `CONTRATO EXCLUSIVIDAD FIRMADO\nPropietaria: ${nombreProp}\nDNI: ${dniProp}\nFirmante: ${firma}\nFecha: ${ahora}\nPropiedad: Apartahotel Diamant Blue, Plantas 3 y 4`
     )
     try {
       window.open(`https://wa.me/34620300647?text=${msgJC}`, '_blank')
@@ -148,7 +152,20 @@ export default function ContratoExclusividadPage() {
 
             <h3 className="text-[#c9a96e] text-base font-semibold tracking-wider uppercase print:text-black">REUNIDOS</h3>
 
-            <p><strong>De una parte,</strong> D./Dna. _________________________________ (en adelante, &ldquo;LA PROPIEDAD&rdquo;), mayor de edad, con DNI/NIE n. _________________, en calidad de propietario/a o representante legal de las viviendas sitas en las Plantas 3 y 4 del edificio conocido como Apartahotel Diamant Blue, ubicado en Calle Agua n 5, Cabo Roig, Orihuela Costa, Alicante.</p>
+            <div className="p-4 border border-[#c9a96e]/20 bg-[#c9a96e]/5 mb-4 print:bg-transparent print:border-black/20">
+              <p className="text-xs tracking-[0.15em] uppercase text-[#c9a96e] mb-3 print:text-black">Datos de la propiedad (rellene antes de firmar):</p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-[#888] block mb-1">Nombre completo</label>
+                  <input className="luxury-input text-sm" value={nombreProp} onChange={e => setNombreProp(e.target.value)} placeholder="D./Dna. nombre y apellidos" disabled={firmado} />
+                </div>
+                <div>
+                  <label className="text-xs text-[#888] block mb-1">DNI / NIE / Pasaporte</label>
+                  <input className="luxury-input text-sm" value={dniProp} onChange={e => setDniProp(e.target.value)} placeholder="Numero de identificacion" disabled={firmado} />
+                </div>
+              </div>
+            </div>
+            <p><strong>De una parte,</strong> D./Dna. <strong className="text-[#c9a96e] print:text-black">{nombreProp || '________________'}</strong> (en adelante, &ldquo;LA PROPIEDAD&rdquo;), mayor de edad, con DNI/NIE n. <strong className="text-[#c9a96e] print:text-black">{dniProp || '________________'}</strong>, en calidad de propietario/a o representante legal de las viviendas sitas en las Plantas 3 y 4 del edificio conocido como Apartahotel Diamant Blue, ubicado en Calle Agua n 5, Cabo Roig, Orihuela Costa, Alicante.</p>
 
             <p><strong>De otra parte,</strong> D. Juan Carlos Martinez Lopez (en adelante, &ldquo;EL AGENTE&rdquo;), mayor de edad, actuando en nombre y representacion de <strong>INMOBANCA</strong>, con domicilio profesional en Orihuela Costa, Alicante.</p>
 
@@ -193,10 +210,13 @@ export default function ContratoExclusividadPage() {
             <p><strong>NOVENA. -- Obligaciones de LA PROPIEDAD.</strong><br />
             LA PROPIEDAD se compromete a: (a) respetar la exclusividad otorgada; (b) facilitar el acceso a las viviendas para visitas; (c) entregar toda la documentacion necesaria para la comercializacion y la formalizacion de las ventas; (d) no modificar unilateralmente las condiciones de venta sin acuerdo previo; (e) <strong>no recibir pagos directos de compradores ni intermediarios</strong>, derivando cualquier gestion economica a INMOBANCA; (f) <strong>retirar de venta inmediatamente cualquier apartamento reservado</strong> tras la notificacion de INMOBANCA.</p>
 
-            <p><strong>DECIMA. -- Proteccion de datos.</strong><br />
+            <p><strong>DECIMA. -- Poder de representacion y forma de pago.</strong><br />
+            LA PROPIEDAD se compromete a otorgar a favor de EL AGENTE, o de la persona que este designe, un <strong>poder notarial de representacion</strong> suficiente para actuar en su nombre en la formalizacion de las escrituras publicas de compraventa de las viviendas objeto de este contrato. Dicho poder permitira a EL AGENTE firmar las escrituras en representacion de LA PROPIEDAD, evitando asi desplazamientos innecesarios. El importe correspondiente a LA PROPIEDAD por la venta de cada vivienda (precio de venta menos los honorarios de INMOBANCA) sera <strong>transferido directamente a la cuenta bancaria designada por LA PROPIEDAD</strong>, en el plazo maximo de 5 dias habiles desde la firma de la escritura publica. LA PROPIEDAD facilitara los datos bancarios necesarios a tal efecto.</p>
+
+            <p><strong>UNDECIMA. -- Proteccion de datos.</strong><br />
             Ambas partes se comprometen al cumplimiento de la normativa vigente en materia de proteccion de datos (RGPD y LOPDGDD).</p>
 
-            <p><strong>UNDECIMA. -- Jurisdiccion.</strong><br />
+            <p><strong>DUODECIMA. -- Jurisdiccion.</strong><br />
             Para cuantas cuestiones pudieran derivarse del presente contrato, ambas partes se someten a la jurisdiccion de los Juzgados y Tribunales de Orihuela (Alicante), con renuncia expresa a cualquier otro fuero que pudiera corresponderles.</p>
 
             <p>Y en prueba de conformidad, ambas partes firman el presente documento, por duplicado y a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
@@ -245,8 +265,8 @@ export default function ContratoExclusividadPage() {
           {/* Sign button */}
           {!firmado && (
             <div className="mt-8 text-center print:hidden">
-              <button onClick={firmarContrato} disabled={!firma || !firmaPropietaria || enviando}
-                className={`btn-gold ${(!firma || !firmaPropietaria || enviando) ? 'opacity-30 cursor-not-allowed' : ''}`}>
+              <button onClick={firmarContrato} disabled={!firma || !firmaPropietaria || !nombreProp || !dniProp || enviando}
+                className={`btn-gold ${(!firma || !firmaPropietaria || !nombreProp || !dniProp || enviando) ? 'opacity-30 cursor-not-allowed' : ''}`}>
                 {enviando ? 'Firmando...' : 'Firmar contrato de exclusividad'}
               </button>
               <p className="text-xs text-[#888] mt-2">Al firmar, acepta todas las clausulas del presente contrato.</p>

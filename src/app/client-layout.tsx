@@ -58,6 +58,7 @@ function Navigation() {
               )}
             </div>
 
+            <a href="/contrato-exclusividad" className="text-xs tracking-[0.2em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors hidden md:inline">Contrato</a>
             <Link href="/reservar" className="btn-gold text-xs !px-5 !py-2.5 hidden sm:inline-flex">{t.nav_reserve}</Link>
 
             {/* Hamburger mobile */}
@@ -78,6 +79,7 @@ function Navigation() {
             <a href="/apartamentos" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_apartments}</a>
             <a href="/#ubicacion" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_location}</a>
             <a href="/#contacto" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">{t.nav_contact}</a>
+            <a href="/contrato-exclusividad" onClick={() => setMenuOpen(false)} className="text-sm tracking-[0.15em] uppercase text-[#b8b8b8] hover:text-[#c9a96e] transition-colors">Contrato</a>
             <Link href="/reservar" onClick={() => setMenuOpen(false)} className="btn-gold text-xs text-center mt-2">{t.nav_reserve}</Link>
           </div>
         </div>
